@@ -8,8 +8,9 @@ const FormularioTarea = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        setTareas([...tareas, tarea,]);
-    }
+        setTareas([...tareas, { id: Date.now(), text: tarea }]);
+        setTarea("");
+    };
     return (
         <>
             <Form onSubmit={handleSubmit}>
@@ -19,7 +20,7 @@ const FormularioTarea = () => {
                 >
                     <Form.Control
                         type="text"
-                        placeholder="Enter email"
+                        placeholder="Ingrese una tarea"
                         onChange={(e) => setTarea(e.target.value)}
                         value={tarea}
                     />
