@@ -1,8 +1,11 @@
-import { ListGroup } from "react-bootstrap";
+import { Button, ListGroup } from "react-bootstrap";
 
-const ItemTarea = ({textoTarea}) => {
+const ItemTarea = ({textoTarea, borrarTarea}) => {
     return (
-        <ListGroup.Item className="my-2">{textoTarea}</ListGroup.Item>
+        <>
+            <ListGroup.Item className="my-2">{textoTarea}</ListGroup.Item>
+            <Button onClick={() => borrarTarea(textoTarea)}>Eliminar tarea</Button>
+        </>
     );
 };
 

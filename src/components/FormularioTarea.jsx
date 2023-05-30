@@ -1,16 +1,27 @@
 import { Form, Button } from "react-bootstrap";
 import ListaTareas from "./ListaTareas";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const FormularioTarea = () => {
-    const [tarea, setTarea] = useState("");
-    const [tareas, setTareas] = useState([]);
+    //traemos las tareas del localStorage
+    const tareaLocalStorage = JSON.parse(localStorage.getItem("listaTareas")) || [];
 
+    const [tarea, setTarea] = useState("");
+    const [tareas, setTareas] = useState(tareaLocalStorage);
+    // CICLO DE VIDA
+    useEffect(()=>{
+        localStorage.setItem("listaTareas", JSON.stringify(tareas));
+    }, [tareas]);
     const handleSubmit = (e) => {
         e.preventDefault();
         setTareas([...tareas, { id: Date.now(), text: tarea }]);
         setTarea("");
     };
+
+    function borrarTarea(nombreTarea){
+        let copiaTareas = tareas.filter((itemTarea) => itemTarea.text !== nombreTarea);
+        setTareas(copiaTareas);
+    }
     return (
         <>
             <Form onSubmit={handleSubmit}>
@@ -29,7 +40,7 @@ const FormularioTarea = () => {
                     </Button>
                 </Form.Group>
             </Form>
-            <ListaTareas listaTareas={tareas}></ListaTareas>
+            <ListaTareas listaTareas={tareas} borrarTarea={borrarTarea}></ListaTareas>
         </>
     );
 };
